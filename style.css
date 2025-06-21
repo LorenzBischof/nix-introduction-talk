@@ -1,0 +1,6 @@
+.slidev-layout {
+  h1 + p {
+    color: #333;
+    opacity: 1;
+  }
+}
