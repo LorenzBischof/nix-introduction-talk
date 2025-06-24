@@ -569,11 +569,23 @@ https://devenv.sh
 # NixOS
 
 - Declarative
-- Build in CICD
-- Artifacts are pushed to Cache
 - GitOps for your laptop
 - Atomic upgrades
 - Rollbacks
+
+<br>
+
+```nix
+virtualisation = {
+  docker.enable = true;
+  libvirtd.enable = true;
+};
+```
+
+
+https://github.com/LorenzBischof/nixfiles
+
+https://github.com/cloudlena/nixfiles
 
 ---
 
