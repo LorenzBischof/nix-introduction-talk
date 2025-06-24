@@ -510,6 +510,60 @@ https://edolstra.github.io/pubs/phd-thesis.pdf
 
 # Developer Shells
 
+```bash
+$ ffmpeg -version
+Command not found!
+
+$ nix-shell -p ffmpeg
+ffmpeg version 7.1.1 Copyright (c) 2000-2025 the FFmpeg developers
+
+$ exit
+
+$ ffmpeg -version
+Command not found!
+```
+
+---
+
+# Developer Shells
+
+```nix
+pkgs.mkShell {
+  packages = [
+    pkgs.ffmpeg
+  ];
+
+  shellHook = ''
+    export DEBUG=1
+  '';
+}
+```
+
+```bash
+nix-shell
+```
+
+---
+
+# Developer Shells
+
+```nix
+{ pkgs, ... }: {
+  packages = [
+    pkgs.ffmpeg
+  ];
+  languages.rust.enable = true;
+  services.postgres.enable = true;
+}
+
+```
+
+```bash
+devenv shell
+```
+
+https://devenv.sh
+
 ---
 
 # NixOS
