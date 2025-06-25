@@ -8,6 +8,7 @@ drawings:
 transition: fade
 mdc: true
 canvasWidth: 800
+colorSchema: light
 ---
 
 ![](https://zurich.nix.ug/assets/nix-zurich.svg){width=200px}
@@ -72,6 +73,33 @@ img {
 # Door
 
 Locked after 19:00
+
+---
+layout: two-cols-header
+---
+
+# Sponsors
+
+::left::
+
+![](/nix.svg){width=200px class="nix"}
+
+<br>
+<br>
+::right::
+
+![](/peakscale.svg){width=300px class="peakscale"}
+
+<style>
+.nix {
+  position: relative;
+  left: 30px;
+}
+.peakscale {
+  position: relative;
+  top: 30px;
+}
+</style>
 
 ---
 layout: two-cols-header
@@ -221,7 +249,7 @@ Linux distribution built around the Nix package manager
 
 ---
 
-# NixPkgs
+# Nixpkgs
 
 ![](/repology.png)
 
@@ -235,7 +263,7 @@ margin-right: auto;
 
 ---
 
-# NixPkgs
+# Nixpkgs
 
 ````md magic-move
 ```nix {2-6|8-14}
@@ -602,12 +630,28 @@ https://github.com/cloudlena/nixfiles
 
 ---
 
-# Sponsoring and Locations
+# Contact me
 
-TODO
+- Sponsoring
+- Locations
+- Speakers
+
+<br>
+<br>
+
+#### LinkedIn
+- Lorenz Bischof
+- Lena Fuhrimann
 
 ---
 
-# Speakers
+# Next Events
 
-TODO
+- August 21: Cloud Native Bern
+- September 1: DevOps Bern
+- September 3: Go Bern
+- **September 5-7: NixCon**
+- **September 18: Cloud Native Day Bern**
+- **October 21: Nix Bern**
+- **November 29-30: Nix Zürich**
+
