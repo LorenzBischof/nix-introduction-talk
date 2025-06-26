@@ -153,6 +153,14 @@ img {
 }
 </style>
 
+<!--
+- modern deployment process
+- really simple deployment format
+- elaborate versioning scheme
+- README
+- dependencies from Sourceforge
+- send it over to the system administration team
+-->
 ---
 
 # Software deployment
@@ -173,6 +181,14 @@ img {
   margin-top: 30px;
 }
 </style>
+
+<!--
+- Systems team is slow updating their systems
+- Rhel system. Something about stability.
+- Different patches or build arguments
+- Simple solution: patch and compile ourselves
+- All our problems are solved!
+-->
 
 ---
 
@@ -206,16 +222,32 @@ img {
 - **Atomicity:** upgrades are not atomic, creating broken intermediate states
 - **Scope:** software can only be installed system-wide
 
+<!--
+- **Dependencies**: incomplete deployments, build scripts are allowed full network access. Without verification. Supply chain attacks.
+- **Variability**: build flags and custom patches.
+- **source/binary**: ubuntu/gentoo, distro decides which version, patches or build arguments. hard to override
+- **Atomicity**: upgrades overwrite existing files /usr/bin/firefox, power/network failure
+- **Scope**: PATH, static linking
+
+-->
 ---
 
 # How Nix helps
 
-- **Dependencies:** build in a sandbox with nothing else available
-- **Variability:** multiple variants and versions at the same time
-- **Source vs binary:** binary cache if available
-- **Atomicity:** upgrades happen by switching a symlink
-- **Scope:** software can be installed system-wide or for a single user
+- **Dependencies:** build in a sandbox with only declared dependencies available
+<!--- **Dependencies:** only explicitly declared dependencies are available during the build-->
+- **Variability:** install multiple software variants and versions side-by-side
+- **Source vs binary:** download binary from cache if available
+- **Atomicity:** upgrade by switching a symlink
+- **Scope:** install software system-wide or for a single user
 
+<!--
+- **Dependencies**: all dependencies and their exact build parameters are specified recursively. No network or filesystem access.
+- **Variability**: packages can specify which variant of a dependency they require
+- **source/binary**: basically an optimization if you are using the exact same build file. otherwise built from source. Because dependencies are specified recursively, we can also modify the dependencies, which would result in all upper packages being rebuilt. Of course we can have a build server and our own private cache.
+- **Atomicity**: if something does not work, we can rollback by switching the symlink back to the old configuration
+- **Scope**: shared VM, only installed once, different variants
+-->
 ---
 
 # Nix History
@@ -247,17 +279,25 @@ Linux distribution built around the Nix package manager
   }
 </style>
 
+<!--
+linux, mac, wsl
+-->
 ---
 
 # Nixpkgs
 
 ![](/repology.png)
 
+https://repology.org
+
 <style>
 img {
-display: block;
-margin-left: auto;
-margin-right: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+a {
+  float: right;
 }
 </style>
 
@@ -341,6 +381,22 @@ in
 # Derivation
 
 ````md magic-move
+```nix{0-5}
+{
+  stdenv,
+  fetchurl,
+  ffmpeg,
+}:
+
+stdenv.mkDerivation {
+  name = "hello-2.12.1";
+  nativeBuildInputs = [ ffmpeg ];
+  src = fetchurl {
+    url = "mirror://gnu/hello/hello-2.12.1.tar.gz";
+    hash = "sha256-jZkUKv2SV28wsM18tCqNxoCZmLxdYH2Idh9RLibH2yA=";
+  };
+}
+```
 ```nix
 {
   stdenv,
@@ -393,6 +449,13 @@ stdenv.mkDerivation {
 ```
 ````
 
+<!--
+- function arguments
+- nix language compiles to derivations, these should not change if the code is refactored. Used for hashes
+- fetchurl also a derivation which uses curl
+- **mkDerivation** runs a generic build script: download, unpack, configure, make, make install etc.
+- **nativeBuildInputs** in addition to the stdenv
+-->
 ---
 
 #### `builder.sh`
@@ -543,6 +606,8 @@ $ ffmpeg -version
 Command not found!
 
 $ nix-shell -p ffmpeg
+
+$ ffmpeg -version
 ffmpeg version 7.1.1 Copyright (c) 2000-2025 the FFmpeg developers
 
 $ exit
@@ -651,7 +716,7 @@ https://github.com/cloudlena/nixfiles
 - September 1: DevOps Bern
 - September 3: Go Bern
 - **September 5-7: NixCon**
-- **September 18: Cloud Native Day Bern**
+- **September 18: Swiss Cloud Native Day Bern**
 - **October 21: Nix Bern**
 - **November 29-30: Nix Zürich**
 
